@@ -10,36 +10,76 @@
 <body>
     <h1></h1>
     <div class="container-sm">
-        <table class="table">
+
+<table class="table">
   <thead>
     <tr>
        
-      <th scope="col">Produse</th>
-      <th scope="col">Pret</th>
-      <th scope="col">Cantitate</th>
-      <th scope="col">total fara tva</th>
-      <th scope="col">total cu tva</th>
+      <th scope="col">Invoice number</th>
+      <th scope="col">Invoice prefix</th>
+      <th scope="col" colspan="3">Line 1</th>
+      <th scope="col" colspan="3">Line 2</th>
+      <th scope="col" colspan="3">Line 3</th>
+      <th scope="col">VAT</th>
+ 
     </tr>
+    <tr>
+      <td width="61">&nbsp;</td>
+      <td width="56">&nbsp;</td>
+      <td width="81">
+      <p>Description</p>
+      </td>
+      <td width="43">
+      <p>price</p>
+      </td>
+      <td width="33">
+      <p>qty</p>
+      </td>
+      <td width="81">
+      <p>Description</p>
+      </td>
+      <td width="43">
+      <p>price</p>
+      </td>
+      <td width="33">
+      <p>qty</p>
+      </td>
+      <td width="81">
+      <p>Description</p>
+      </td>
+      <td width="43">
+      <p>price</p>
+      </td>
+      <td width="33">
+      <p>qty</p>
+      </td>
+      <td width="53">&nbsp;</td>
+      </tr>
   </thead>
   <tbody>
 
     <?php
-	
-      $json_data = $this->db->get('mytable');
+    
 
-      foreach($json_data->result() as $data)
+      $this->db->join('invoices_lines', 'invoices.id = invoices_lines.invoice_id');       
+      $result = $this->db->get('invoices')->result_array();
+      return $result;
+      
+      // $json_data = $this->db->get('invoices');
+
+      foreach($result->result() as $invoice)
       { 
          
-          $total_price= $data->price;
-          $total_qty = $data->qty;
-          $vat= $data->vat_percentage;
+          $total_price= $invoice->price;
+          $total_qty = $result->qty;
+          $vat= $result->vat_percentage;
           $total_fara_vat = $total_price *$total_qty;
           $total_cu_vat = $total_fara_vat + ($total_fara_vat*$vat);
 
     ?>
     <tr>
        
-      <td><?= $data->description  ?></td> 
+      <td><?= $invoice->description  ?></td> 
       <td><?= $data->price ?></td> 
       <td><?= $data->qty ?></td> 
       <td><?=   $total_fara_vat ?></td>

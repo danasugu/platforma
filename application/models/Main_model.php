@@ -18,19 +18,70 @@ class Main_model extends CI_Model {
     public function get_total( )
     
     {
-       
-        $result = $this->db->get('mytable')->result_array();
-
+        $this->db->join('invoices_lines', 'invoices.id = invoices_lines.invoice_id');       
+        $result = $this->db->get('invoices')->result_array();
         return $result;
        
+        // $result = $this->db->get('mytable')->result_array();
+
+        // return $result;
+       
     }
 
-    public function add_prod( $prod_details )
+    // public function add_prod( $prod_details )
 
+    // {
+    //     $this->db->insert('mytable', $prod_details);
+    // }
+
+    
+ 
+    public function insert_data($add_invoice, $add_invoice_lines)
     {
-      $this->db->insert('mytable', $prod_details);
+
+ 
+        // $this->db->insert('invoices', $add_invoice);
+        // $this->db->insert('invoices_lines', $add_invoice_lines);
+
+        // $this->db->join('invoices_lines', 'invoices.id = invoices_lines.invoice_id');       
+        // $result = $this->db->get('invoices')->result_array();
+        // return $result;
+        
+        
+    }
+             
+
+    
+    public function view_invoices()
+    {
+        // $this->db->select('*');
+		// $this->db->from('invoices');
+		// $results = $this->db->join('invoices_lines', 'invoices.id = invoices_lines.invoice_id');
+		// $results= $this->db->get();
+		// return $results;
+        
+        $this->db->select('*');
+		// $this->db->from('invoices');
+		$results = $this->db->join('invoices_lines', 'invoices.id = invoices_lines.invoice_id');
+        
+        $results= $this->db->get('invoices')->result_array();;
+		return $results;
+
+        print_r($results);
+        // $results = $this->db->get('invoices')->result_array();
+        // return $results;
     }
 
+
+    public function update_invoice($add_invoice, $add_invoice_lines)
+    {
+        $this->db->update('invoices', $add_invoice);
+        $this->db->update('invoices_lines', $add_invoice_lines);
+    }
+  
 }
+
+
+
 
 /* End of file Main_model.php */

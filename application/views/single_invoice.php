@@ -1,7 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
- 
+if( !$_SESSION['u_email'] ){
+  redirect('index.php/main_controller/login', 'refresh');
+}
+$id=$this->uri->segment(3);
 ?>
+<!-- Welcome, <?php echo $_SESSION['u_email']; ?> -->
+
+<?php 
+$this->load->view('header');
+ ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +19,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add products</title>
+    <title>Edit invoice</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
@@ -25,48 +35,67 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="col-lg-9 col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading"></div>
-          <h1>Add Invoice</h1>
+          				<h1>Single invoice </h1>
 					<div class="panel-body">
-						<?php echo form_open('index.php/main_controller/add_invoice_data','class="form-horizontal"');
-						?>
+					
+					<?php
+						$invoice_details = $this->db->get_where('invoices', array('id' => $id ));
+					
+						foreach ($invoice_details->result() as $invoice)
+					
+					{?>
+					
+					 
 
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Invoice Number</label>
-							<div class="col-sm-2">
-							<input type="text" name="invoice_number" class="form-control input-sm" >
- 
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Invoice Prefix</label>
-							<div class="col-sm-2">
-								<input type="text" name="invoice_prefix" class="form-control input-sm" >
+						<tr>
+							<td>Invoice number</td>
+							<td><?= $invoice->invoice_number ?></td>
+						</tr>
+
+						<tr>
+						<td>Invoice prefix</td>
+							<td><?= $invoice->invoice_prefix ?></td>
+						</tr>
+						
+			 
+
+
 				 
-							</div>
-						</div>
+					<?php }
+
+					?>
+
+
+					<?php
+						$invoices_lines_details = $this->db->get_where('invoices_lines', array('invoice_id' => $id ));
+					
+						foreach ($invoices_lines_details->result() as $invoices_lines)
+					
+					{?>
+					
+						 
+					<td>description</td>
+					   <td><?= $invoices_lines->description_l1 ?></td>
+				   </tr>
+
 						 <h6>linia 1</h6>
+
 						<div class="form-group">
 						<label class="col-sm-2 control-label">Description</label>
 							 <div class="col-sm-10">
-							<input type="text" name="linedata[0][description]" class="form-control input-sm" >
+							<input type="text" name="description_l1" class="form-control input-sm"  value="<?= $invoices_lines->description_l1 ?>" >
 							 </div>
 						</div>
 						<div class="form-group">
 						<label class="col-sm-2 control-label">Price</label>
 							<div class="col-sm-10">
-								<input type="text" name="linedata[0][price]" class="form-control input-sm" >
+								<input type="text" name="price_l1" class="form-control input-sm" value="<?= $invoices_lines->price_l1 ?>" >
 							</div>
 						</div>
 						<div class="form-group">
 						<label class="col-sm-2 control-label">Qty</label>
 						<div class="col-sm-10">
-						<input type="text" name="linedata[0][qty]" class="form-control input-sm" >
-						</div>
-						</div>
-						<div class="form-group">
-						<label class="col-sm-2 control-label">procent tva</label>
-						<div class="col-sm-10">
-						<input type="text" name="linedata[0][vat_percentage]" class="form-control input-sm" >
+						<input type="text" name="qty_l1" class="form-control input-sm" value="<?= $invoices_lines->qty_l1 ?>" >
 						</div>
 						</div>
 
@@ -75,25 +104,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="form-group">
 						<label class="col-sm-2 control-label">Description</label>
 							 <div class="col-sm-10">
-							<input type="text" name="linedata[1][description]" class="form-control input-sm" >
+							<input type="text" name="description_l2" class="form-control input-sm" value="<?= $invoices_lines->description_l2 ?>" >
 							 </div>
 						</div>
 						<div class="form-group">
 						<label class="col-sm-2 control-label">Price</label>
 							<div class="col-sm-10">
-								<input type="text" name="linedata[1][price]" class="form-control input-sm" >
+								<input type="text" name="price_l2" class="form-control input-sm" value="<?= $invoices_lines->price_l2 ?>" >
 							</div>
 						</div>
 						<div class="form-group">
 						<label class="col-sm-2 control-label">Qty</label>
 						<div class="col-sm-10">
-						<input type="text" name="linedata[1][qty]" class="form-control input-sm" >
-						</div>
-						</div>
-						<div class="form-group">
-						<label class="col-sm-2 control-label">procent tva</label>
-						<div class="col-sm-10">
-						<input type="text" name="linedata[1][vat_percentage]" class="form-control input-sm" >
+						<input type="text" name="qty_l2" class="form-control input-sm" value="<?= $invoices_lines->qty_l2 ?>" >
 						</div>
 						</div>
 
@@ -101,26 +124,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<div class="form-group">
 						<label class="col-sm-2 control-label">Description</label>
 							 <div class="col-sm-10">
-							<input type="text" name="linedata[2][description]" class="form-control input-sm" >
+							<input type="text" name="description_l3" class="form-control input-sm" value="<?= $invoices_lines->description_l3 ?>" >
 							 </div>
 						</div>
 						<div class="form-group">
 						<label class="col-sm-2 control-label">Price</label>
 							<div class="col-sm-10">
-								<input type="text" name="linedata[2][price]" class="form-control input-sm" >
+								<input type="text" name="price_l3" class="form-control input-sm" value="<?= $invoices_lines->price_l3 ?>" >
 							</div>
 						</div>
 						<div class="form-group">
 						<label class="col-sm-2 control-label">Qty</label>
 						<div class="col-sm-10">
-						<input type="text" name="linedata[2][qty]" class="form-control input-sm" >
+						<input type="text" name="qty_l3" class="form-control input-sm" value="<?= $invoices_lines->qty_l3 ?>" >
 						</div>
 						</div>
+ 
 
 						<div class="form-group">
 						<label class="col-sm-2 control-label">procent tva</label>
 						<div class="col-sm-10">
-						<input type="text" name="linedata[2][vat_percentage]" class="form-control input-sm" >
+						<input type="text" name="vat_percentage" class="form-control input-sm" value="<?= $invoices_lines->vat_percentage ?>" >
 						</div>
 						</div>
 
@@ -134,13 +158,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-							<input type="submit" name="add_invoice" value="Add invoice" class="btn btn-sm btn-info">
+							<a href="<?= site_url() ?>index.php/main_controller/update_invoice_process/<?= $invoice->id; ?>" class="btn btn-info btn-xs btn-block"> 
+							<span  class="btn btn-sm btn-info">edit invoice</span></a>
 							</div>
 						</div>
 						
 						
-						<?php
-						form_close();
+				 
+					<?php }
+
 					?>
 					</div>
 				</div>

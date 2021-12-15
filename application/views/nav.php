@@ -8,15 +8,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php echo site_url('home'); ?>">
-      <!-- <small> Hi, <?php echo $_SESSION['u_name']; ?>!</small> </a> -->
+      <a class="navbar-brand" href="<?php echo site_url('dash'); ?>">
+      <small> Hi, <?php echo $_SESSION['u_name']; ?>!</small> </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="<?php echo site_url(); ?>main_controller/logout">Logout</a></li>
+        <li><a href="<?php echo site_url(); ?>home/logout">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
