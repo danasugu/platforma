@@ -23,9 +23,9 @@ ul.list_items li {
 ul#info {
 	padding: 6px;
 	margin: 0;
-	background: #f4f4f4;
-	border: dashed 1px #ccc;
-	width: 65%;
+	/* background: #00aeff;
+	border: dashed 1px #00aeff; */
+	width: 65%; 
 }
 
 ul#info li {
@@ -33,4 +33,7 @@ ul#info li {
 	margin: 0;
 	list-style: none;
 	line-height: 1.7em;
+	text-align: center;
+	font-size: 2.2em;
+	
 }

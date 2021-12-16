@@ -1,6 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $id = $this->uri->segment(3);
+$invoice_id = $this->uri->segment(3);
  
 ?>
 
@@ -28,7 +29,7 @@ $id = $this->uri->segment(3);
 					<div class="panel-heading"></div>
           <h1>Update Invoice</h1>
 					<div class="panel-body">
-						<?php echo form_open('index.php/main_controller/update_invoice_process/'.$id,'class="form-horizontal"');
+						<?php echo form_open_multipart('index.php/main_controller/update_invoice_process/'.$id,'class="form-horizontal"');
 						
 						$invoice_data = $this->db->get_where('invoices', array('id' => $id));
 						
@@ -38,7 +39,7 @@ $id = $this->uri->segment(3);
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Invoice Number</label>
 							<div class="col-sm-2">
-							<input type="text" name="invoice_number" class="form-control input-sm" value="<?php echo $invoice->invoice_number ?>">
+								<input type="text" name="invoice_number" class="form-control input-sm" value="<?php echo $invoice->invoice_number ?>">
 							</div>
 						</div>
 						<div class="form-group">
@@ -52,7 +53,7 @@ $id = $this->uri->segment(3);
 						
 						
 						
-						$data['linedata'] = $this->db->get_where('invoices_lines', array('invoice_id' => $id))->result_array();
+						$data['linedata'] = $this->db->get_where('invoices_lines', array('invoice_id' => $invoice_id))->result_array();
 						// var_dump($invoice_lines_data['linedata'] ); 
 						// echo "<pre>";
 						// print_r($data['linedata'] );
@@ -65,38 +66,39 @@ $id = $this->uri->segment(3);
 					 
 						
 						foreach( $data['linedata'] as $key => $l )
-						{   						
+						{   	
+							$description = $l['id']['description'];	 				
 						?>
  
 								<div>
 								<label class="col-sm-2 control-label">Description</label>
 									<div class="col-sm-10">
-									<input type="text" name="linedata[0][description]" class="form-control input-sm" value="<?= $l['description'] ?>">
+										<input type="text" name="linedata[0][description]" class="form-control input-sm" value="<?= $l['id']['description']; ?>">
 									</div>
 								</div>
 								
 								<div>
 								<label class="col-sm-2 control-label">Price</label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[0][price]" class="form-control input-sm" value="<?= $l['price'] ?>">
+										<input type="text" name="linedata[0][price]" class="form-control input-sm" value="<?= $l['id']['price']; ?>">
 									</div>
 								</div>
 								<div>
-								<label class="col-sm-2 control-label">Qty</label>
-								<div class="col-sm-10">
-								<input type="text" name="linedata[0][qty]" class="form-control input-sm" value="<?= $l['qty'] ?>">
-								</div>
+									<label class="col-sm-2 control-label">Qty</label>
+									<div class="col-sm-10">
+										<input type="text" name="linedata[0][qty]" class="form-control input-sm" value="<?= $l['id']['qty'] ;?>">
+									</div>
 								</div>
 								<div>
-								<label class="col-sm-2 control-label">procent tva</label>
-								<div class="col-sm-10">
-								<input type="text" name="linedata[0][vat_percentage]" class="form-control input-sm" value="<?= $l['vat_percentage'] ?>">
-								</div>
+									<label class="col-sm-2 control-label">procent tva</label>
+									<div class="col-sm-10">
+										<input type="text" name="linedata[0][vat_percentage]" class="form-control input-sm" value="<?= $l['id']['vat_percentage'] ;?>">
+									</div>
 								</div>	
 
 								<div>
 									<div class="col-sm-offset-2 col-sm-10">
-									<input type="hidden"  name="invoice_id">
+										<input type="hidden"  name="invoice_id">
 									</div>
 								</div> 
 								<br>

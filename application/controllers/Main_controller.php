@@ -158,13 +158,7 @@ class Main_controller extends CI_Controller {
 	
 	public function update_invoice($id)
 	{
-		 
-		
 		$this->load->view('update_invoice', $id);
-
-		// redirect(site_url('index.php/main_controller/view_invoices'), 'refresh');
-
-
 	}
 	
 
@@ -207,11 +201,9 @@ class Main_controller extends CI_Controller {
 			redirect(site_url('index.php/main_controller/view_invoices'));
 		}
 
- 
-		
+ 		
 		$this->load->view('add_invoice');
 	}
-
 
 
 	public function delete_invoice($id)
@@ -232,7 +224,6 @@ public function update_invoice_process( $id )
 		
 		if( $this->input->post('update_invoice') )
 		{
-			$id = $this->uri->segment(3);
 			$data = $this->input->post();
 
 			$invoice_data['invoice_number'] = $data['invoice_number'];
@@ -248,14 +239,13 @@ public function update_invoice_process( $id )
 			foreach( $data['linedata'] as $key => $l )
 			{
 
-				// print_r($l); exit();
+				// print_r($id); exit();
 				
-				$l['invoice_id'] = $invoice_id;
-							
-				
-				$this->db->where('invoice_id', $invoice_id);
-			
+				// $this->db->where('invoice_id', $id);
+				$this->db->where('id', $l['id']);
 				$this->db->update('invoices_lines', $l);
+			
+				// $this->db->update('invoices_lines', $l);
 				
 				
 				$total += $l['qty'] * $l['price'];
@@ -269,7 +259,7 @@ public function update_invoice_process( $id )
 
  
 		
-		$this->load->view('add_invoice');
+		$this->load->view('view_invoice');
 	}
 
 }
