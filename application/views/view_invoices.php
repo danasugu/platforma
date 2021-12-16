@@ -42,7 +42,7 @@ $id=$this->uri->segment(3);
        
       <th scope="col">Invoice number</th>
       <th scope="col">Invoice prefix</th>
-      <th scope="col">Details</th>
+      <!-- <th scope="col">Details</th> -->
       <th scope="col">Edit / Update</th>
       <th scope="col">Delete</th>
  
@@ -66,7 +66,7 @@ $id=$this->uri->segment(3);
      
       <td > <?= $invoice->invoice_number; ?> </td>
       <td ><?= $invoice->invoice_prefix; ?> </td>
-      <td> <a href="<?= site_url() ?>index.php/main_controller/single_invoice/<?= $invoice->id; ?>" class="btn btn-success btn-xs btn-block">view details</a> </td>
+      <!-- <td> <a href="<?= site_url() ?>index.php/main_controller/single_invoice/<?= $invoice->id; ?>" class="btn btn-success btn-xs btn-block">view details</a> </td> -->
       <td> <a href="<?= site_url() ?>index.php/main_controller/update_invoice/<?= $invoice->id; ?>" class="btn btn-info btn-xs btn-block">edit/update</a></td>
       <td> <a href="<?= site_url() ?>index.php/main_controller/delete_invoice/<?= $invoice->id; ?>" class="btn btn-danger btn-xs btn-block">delete </td>
 

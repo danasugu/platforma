@@ -99,8 +99,8 @@ class Main_controller extends CI_Controller {
 			redirect('', 'refresh');
 
 		} else{
-            // redirect('home', 'refresh');
-			echo 2;
+            redirect('home', 'refresh');
+			// echo 234;
         }
 	}
 
@@ -223,6 +223,54 @@ class Main_controller extends CI_Controller {
 		redirect('index.php/main_controller/view_invoices', 'refresh');
 	}
 
+
+ 
+
+
+public function update_invoice_process( $id )
+	{
+		
+		if( $this->input->post('update_invoice') )
+		{
+			$id = $this->uri->segment(3);
+			$data = $this->input->post();
+
+			$invoice_data['invoice_number'] = $data['invoice_number'];
+			$invoice_data['invoice_prefix'] = $data['invoice_prefix'];
+
+			$this->db->where('id', $id);
+			$this->db->update('invoices',$invoice_data);
+		
+			$invoice_id = $this->db->insert_id();
+
+			$total = 0;
+
+			foreach( $data['linedata'] as $key => $l )
+			{
+
+				// print_r($l); exit();
+				
+				$l['invoice_id'] = $invoice_id;
+							
+				
+				$this->db->where('invoice_id', $invoice_id);
+			
+				$this->db->update('invoices_lines', $l);
+				
+				
+				$total += $l['qty'] * $l['price'];
+				
+			}
+
+			 
+			
+			redirect(site_url('index.php/main_controller/view_invoices'));
+		}
+
+ 
+		
+		$this->load->view('add_invoice');
+	}
 
 }
 
