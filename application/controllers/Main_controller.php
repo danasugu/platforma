@@ -238,8 +238,14 @@ public function update_invoice_process( $id )
 			
 			// echo "<pre>";
 			// print_r($data['linedata'] ); exit();
+			// $description = $this->input->post('description');
+			// $l= array(
+			// 	'description' => $description,
+			// );
+
 			foreach( $data['linedata']  as $key =>  $l )
 			{
+					
 				// $l['id'] = $id;
 				// var_dump(count($l));  exit();
 				// var_dump($_POST); exit();
@@ -248,21 +254,21 @@ public function update_invoice_process( $id )
 				
 				// $this->db->where('id', $l['id']);
 				// $this->db->update('invoices_lines', $l);
-			
-
-				$this->db->where('id',$l['id'])->update( 'invoices_lines', $l );
-				// print_r($data['linedata']); exit();
 				
+				
+				// print_r($data['linedata']); exit();
+				// $this->db->set($data['linedata'] ); 
+				$this->db->where('id',$l['id'])->update( 'invoices_lines', $l );
 				$total += $l['qty'] * $l['price'];
 				// var_dump($data['linedata']); exit();
 			}
 			
-			// unset($l);
 			
 			
+
 			redirect(site_url('index.php/main_controller/view_invoices'));
 		}
-
+		
  
 		$this->load->view('view_invoice');
 	}

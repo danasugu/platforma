@@ -37,13 +37,13 @@ $id = $this->uri->segment(3);
 						{ ?>
 
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Invoice Number</label>
+							<label class="col-sm-2 control-label"><strong>Invoice Number</strong></label>
 							<div class="col-sm-2">
 								<input type="text" name="invoice_number" class="form-control input-sm" value="<?php echo $invoice->invoice_number ?>">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Invoice Prefix</label>
+							<label class="col-sm-2 control-label"><strong>Invoice Prefix</strong></label>
 							<div class="col-sm-2">
 								<input type="text" name="invoice_prefix" class="form-control input-sm" value="<?php echo $invoice->invoice_prefix ?>">
 							</div>
@@ -64,14 +64,17 @@ $id = $this->uri->segment(3);
 						echo "<br>";
 						// exit();
 					 
-						
+						$index=1;
 						foreach( $data['linedata'] as $key => $l )
 						{ 
-							
+							$index++;
+
+							//  echo "<pre>";
+						    //  print_r($data['linedata'] );
 							?>
 						
 						<div>
-								<label class="col-sm-2 control-label">Id lines: <?= $l['id']; ?> </label>
+								<label style="text-align:rileftght; background-color:aqua;" class="col-sm-2 control-label"><strong>Id lines: <?= $l['id']; ?> </strong></label>
 									<div class="col-sm-10">
 									<input type="hidden" name="linedata[0][id]" class="form-control input-sm" value="<?= $l['id']; ?>">
 									</div>
@@ -80,26 +83,26 @@ $id = $this->uri->segment(3);
 							
 							 
 							 	<div>
-								<label class="col-sm-2 control-label">Description</label>
+								<label class="col-sm-2 control-label"><strong>Description</strong></label>
 									<div class="col-sm-10">
 										<input type="text" name="linedata[0][description]" class="form-control input-sm" value="<?= $l['description']; ?>">
 									</div>
 								</div>
 								
 								<div>
-								<label class="col-sm-2 control-label">Price</label>
+								<label class="col-sm-2 control-label"><strong>Price</strong></label>
 									<div class="col-sm-10">
 										<input type="text" name="linedata[0][price]" class="form-control input-sm" value="<?= $l['price']; ?>">
 									</div>
 								</div>
 								<div>
-									<label class="col-sm-2 control-label">Qty</label>
+									<label class="col-sm-2 control-label"><strong>Qty</strong></label>
 									<div class="col-sm-10">
 										<input type="text" name="linedata[0][qty]" class="form-control input-sm" value="<?= $l['qty'] ;?>">
 									</div>
 								</div>
 								<div>
-									<label class="col-sm-2 control-label">procent tva</label>
+									<label class="col-sm-2 control-label"><strong>Procent tva</strong></label>
 									<div class="col-sm-10">
 										<input type="text" name="linedata[0][vat_percentage]" class="form-control input-sm" value="<?= $l['vat_percentage'] ;?>">
 									</div>
