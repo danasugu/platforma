@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 $id = $this->uri->segment(3);
-$invoice_id = $this->uri->segment(3);
+// $invoice_id = $this->uri->segment(3);
  
 ?>
 
@@ -27,7 +27,7 @@ $invoice_id = $this->uri->segment(3);
 			<div class="col-lg-9 col-md-9">
 				<div class="panel panel-default">
 					<div class="panel-heading"></div>
-          <h1>Update Invoice</h1>
+         			<h1>Update Invoice</h1>
 					<div class="panel-body">
 						<?php echo form_open_multipart('index.php/main_controller/update_invoice_process/'.$id,'class="form-horizontal"');
 						
@@ -49,11 +49,11 @@ $invoice_id = $this->uri->segment(3);
 							</div>
 						</div>
 
-						<?php }
+						<?php
 						
 						
 						
-						$data['linedata'] = $this->db->get_where('invoices_lines', array('invoice_id' => $invoice_id))->result_array();
+						$data['linedata'] = $this->db->get_where('invoices_lines', array('invoice_id' => $id))->result_array();
 						// var_dump($invoice_lines_data['linedata'] ); 
 						// echo "<pre>";
 						// print_r($data['linedata'] );
@@ -66,57 +66,74 @@ $invoice_id = $this->uri->segment(3);
 					 
 						
 						foreach( $data['linedata'] as $key => $l )
-						{   	
-							$description = $l['id']['description'];	 				
-						?>
- 
-								<div>
+						{ 
+							
+							?>
+						
+						<div>
+								<label class="col-sm-2 control-label">Id lines: <?= $l['id']; ?> </label>
+									<div class="col-sm-10">
+									<input type="hidden" name="linedata[0][id]" class="form-control input-sm" value="<?= $l['id']; ?>">
+									</div>
+								</div>
+
+							
+							 
+							 	<div>
 								<label class="col-sm-2 control-label">Description</label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[0][description]" class="form-control input-sm" value="<?= $l['id']['description']; ?>">
+										<input type="text" name="linedata[0][description]" class="form-control input-sm" value="<?= $l['description']; ?>">
 									</div>
 								</div>
 								
 								<div>
 								<label class="col-sm-2 control-label">Price</label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[0][price]" class="form-control input-sm" value="<?= $l['id']['price']; ?>">
+										<input type="text" name="linedata[0][price]" class="form-control input-sm" value="<?= $l['price']; ?>">
 									</div>
 								</div>
 								<div>
 									<label class="col-sm-2 control-label">Qty</label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[0][qty]" class="form-control input-sm" value="<?= $l['id']['qty'] ;?>">
+										<input type="text" name="linedata[0][qty]" class="form-control input-sm" value="<?= $l['qty'] ;?>">
 									</div>
 								</div>
 								<div>
 									<label class="col-sm-2 control-label">procent tva</label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[0][vat_percentage]" class="form-control input-sm" value="<?= $l['id']['vat_percentage'] ;?>">
+										<input type="text" name="linedata[0][vat_percentage]" class="form-control input-sm" value="<?= $l['vat_percentage'] ;?>">
 									</div>
 								</div>	
 
 								<div>
 									<div class="col-sm-offset-2 col-sm-10">
-										<input type="hidden"  name="invoice_id">
+										<input type="hidden" name="invoice_id">
 									</div>
 								</div> 
+
 								<br>
-						<?php }
+						<?php
+					// unset($l);
+					// print_r($data['linedata']); exit();	
+					}
 						
 						?>
-								<br><br>
+								<br>
+
 								<div>
-								<div class="col-sm-offset-2 col-sm-10">
-								<input type="submit" name="update_invoice" value="Update invoice" class="btn btn-sm btn-warning">
+									<div class="col-sm-offset-2 col-sm-10">
+										<input type="submit" name="update_invoice" value="Update invoice" class="btn btn-sm btn-warning">
+									</div>
 								</div>
-						</div>
 
 						<br><br>
 
 						
-						<?php
+					<?php
+					//	unset($l);
+						// print_r($data['linedata']); exit();	
 						form_close();
+					}
 					?>
 					</div>
 				</div>

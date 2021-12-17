@@ -216,49 +216,54 @@ class Main_controller extends CI_Controller {
 	}
 
 
- 
 
 
 public function update_invoice_process( $id )
 	{
 		
-		if( $this->input->post('update_invoice') )
+		if( $this->input->post( 'update_invoice') )
 		{
 			$data = $this->input->post();
-
+			// var_dump($_POST); exit();
+			
 			$invoice_data['invoice_number'] = $data['invoice_number'];
 			$invoice_data['invoice_prefix'] = $data['invoice_prefix'];
-
-			$this->db->where('id', $id);
-			$this->db->update('invoices',$invoice_data);
-		
-			$invoice_id = $this->db->insert_id();
-
-			$total = 0;
-
-			foreach( $data['linedata'] as $key => $l )
-			{
-
-				// print_r($id); exit();
-				
-				// $this->db->where('invoice_id', $id);
-				$this->db->where('id', $l['id']);
-				$this->db->update('invoices_lines', $l);
 			
-				// $this->db->update('invoices_lines', $l);
+			$this->db->where( 'id', $id )->update( 'invoices',$invoice_data );
+			
+			// $invoice_id = $this->db->insert_id();
+			
+			$total = 0;
+			
+			
+			// echo "<pre>";
+			// print_r($data['linedata'] ); exit();
+			foreach( $data['linedata']  as $key =>  $l )
+			{
+				// $l['id'] = $id;
+				// var_dump(count($l));  exit();
+				// var_dump($_POST); exit();
+				// print_r($data['linedata']); exit();
+				// $this->db->where('invoice_id', $id);
 				
+				// $this->db->where('id', $l['id']);
+				// $this->db->update('invoices_lines', $l);
+			
+
+				$this->db->where('id',$l['id'])->update( 'invoices_lines', $l );
+				// print_r($data['linedata']); exit();
 				
 				$total += $l['qty'] * $l['price'];
-				
+				// var_dump($data['linedata']); exit();
 			}
-
-			 
+			
+			// unset($l);
+			
 			
 			redirect(site_url('index.php/main_controller/view_invoices'));
 		}
 
  
-		
 		$this->load->view('view_invoice');
 	}
 

@@ -67,7 +67,7 @@ class Main_model extends CI_Model {
         $results= $this->db->get('invoices')->result_array();;
 		return $results;
 
-        print_r($results);
+        // print_r($results);
         // $results = $this->db->get('invoices')->result_array();
         // return $results;
     }
@@ -77,6 +77,16 @@ class Main_model extends CI_Model {
     {
         $this->db->update('invoices', $add_invoice);
         $this->db->update('invoices_lines', $add_invoice_lines);
+    }
+  
+
+    public function update_invoice_process($id)
+    {
+       $this->db->get_where('invoices', array('id' => $id));
+       $data['linedata'] = $this->db->get_where('invoices_lines', array('invoice_id' => $id))->result_array();
+
+        // $this->db->update('invoices', $id);
+        // $this->db->update('invoices_lines', $id);
     }
   
 }
