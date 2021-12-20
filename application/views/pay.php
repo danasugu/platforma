@@ -8,7 +8,7 @@ $id=$this->uri->segment(3);
 <!-- Welcome, <?php echo $_SESSION['u_email']; ?> -->
 
 <?php 
-  // $this->load->view('header');
+  $this->load->view('header');
 //   $this->load->view('nav');
 //  ?>
 
@@ -19,12 +19,12 @@ $id=$this->uri->segment(3);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Totals</title>
+    <title>Payments</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-    <h1></h1>
-
+    <!-- <h3 style="text-align: center">Payments</h3>
+<div style="height: 70px;"></div> -->
 <!-- dashboard data -->
 <div class="container">
   <div class="row">
@@ -34,9 +34,9 @@ $id=$this->uri->segment(3);
 <!-- sidebar -->
 </div>
 <div class="col-lg-9 col-md-9">
+ 
 <div class="panel-heading"></div>
-         			<h1>View Invoices</h1>
-
+         			<h1>Payments</h1>
 <table class="table">
   <thead>
     <tr>
@@ -44,8 +44,8 @@ $id=$this->uri->segment(3);
       <th scope="col">Invoice number</th>
       <th scope="col">Invoice prefix</th>
       <th scope="col">Total plata</th>
-      <th scope="col">Edit / Update</th>
-      <th scope="col">Delete</th>
+      <th scope="col">Pay</th>
+      <!-- <th scope="col">Delete</th> -->
  
     </tr>
 
@@ -69,8 +69,8 @@ $id=$this->uri->segment(3);
       <td ><?= $invoice->invoice_prefix; ?> </td>
       <td ><?= $invoice->total; ?> </td>
       <!-- <td> <a href="<?= site_url() ?>index.php/main_controller/single_invoice/<?= $invoice->id; ?>" class="btn btn-success btn-xs btn-block">view details</a> </td> -->
-      <td> <a href="<?= site_url() ?>index.php/main_controller/update_invoice/<?= $invoice->id; ?>" class="btn btn-info btn-xs btn-block">edit/update</a></td>
-      <td> <a href="<?= site_url() ?>index.php/main_controller/delete_invoice/<?= $invoice->id; ?>" class="btn btn-danger btn-xs btn-block">delete </td>
+      <td> <a href="<?= site_url() ?>index.php/main_controller/update_invoice/<?= $invoice->id; ?>" class="btn btn-info btn-xs btn-block">pay</a></td>
+      <!-- <td> <a href="<?= site_url() ?>index.php/main_controller/delete_invoice/<?= $invoice->id; ?>" class="btn btn-danger btn-xs btn-block">delete </td> -->
 
     </tr>
 
@@ -82,7 +82,7 @@ $id=$this->uri->segment(3);
     
   </tbody>
 </table>
-     
+    
 </div>
   </div>
 </div>

@@ -2,8 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 $id = $this->uri->segment(3);
 $count = 0; 
-// $invoice_id = $this->uri->segment(3);
-// $this->load->view('header'); 
+ 
+ 
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +29,7 @@ $count = 0;
 			<div class="col-lg-9 col-md-9">
 				<div class="panel panel-default ">
 					<div class="panel-heading"></div>
-         			<h1>Update Invoice</h1>
+         			<h1>Update Payment</h1>
 					<div class="panel-body ">
 						<?php 
 						$attributes = array('class' => 'repeater');
@@ -92,7 +92,7 @@ $count = 0;
 								<div>
 								<label class="col-sm-2 control-label"><strong>Price</strong></label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[<?= $count; ?>][price]" class="form-control input-sm" value="<?= $l['price']; ?>">
+										<input type="text" name="linedata[<?= $count; ?>][price]" class="form-control input-sm" value="<?= $l['price']; ?> lei">
 									</div>
 								</div>
 								<div>
@@ -104,7 +104,7 @@ $count = 0;
 								<div>
 									<label class="col-sm-2 control-label"><strong>Procent tva</strong></label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[<?= $count; ?>][vat_percentage]" class="form-control input-sm" value="<?= $l['vat_percentage']; ?>">
+										<input type="text" name="linedata[<?= $count; ?>][vat_percentage]" class="form-control input-sm" value="<?= $l['vat_percentage']; ?>%">
 									</div>
 								</div>	
 
@@ -115,7 +115,8 @@ $count = 0;
 								</div> 
 								<br>
 								
-								<input data-repeater-delete type="button" class="form-control input-sm btn btn-danger" value="Delete"/>
+								<!-- <input data-repeater-delete type="button" class="form-control input-sm btn btn-danger" value="Delete"/> -->
+								<input type="text"> <input type="submit" value="pay" class="btn btn-warning btn-xs btn-block"/>
 							</div>
 	
 								<br>

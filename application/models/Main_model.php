@@ -73,11 +73,11 @@ class Main_model extends CI_Model {
     }
 
 
-    public function update_invoice($add_invoice, $add_invoice_lines)
-    {
-        $this->db->update('invoices', $add_invoice);
-        $this->db->update('invoices_lines', $add_invoice_lines);
-    }
+    // public function update_invoice($add_invoice, $add_invoice_lines)
+    // {
+    //     $this->db->update('invoices', $add_invoice);
+    //     $this->db->update('invoices_lines', $add_invoice_lines);
+    // }
   
 
     public function update_invoice_process($id)
