@@ -393,6 +393,16 @@ public function update_invoice_process( $id )
  
 		$this->load->view('view_invoice');
 	}
+	
+	public function sum_paid()
+	{
+		$sql = "SELECT sum(paid) as paid FROM payments GROUP BY id";
+		$result = $this->db->query($sql);
+		return $result->row()->paid;
+		
+		// $data['sum'] = $this->model->get_sum(); //in CI_C
+		// <?php echo $sum; ?>  //in view
+	}
 
 
 
