@@ -2,8 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 $id = $this->uri->segment(3);
 $count = 0; 
-// $invoice_id = $this->uri->segment(3);
-// $this->load->view('header'); 
+ 
+ 
 ?>
 
 <!DOCTYPE html>
@@ -13,7 +13,7 @@ $count = 0;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update products</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" >
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
 <!-- <h3 style="text-align: center">Update invoice</h3> -->
@@ -29,11 +29,12 @@ $count = 0;
 			<div class="col-lg-9 col-md-9">
 				<div class="panel panel-default ">
 					<div class="panel-heading"></div>
-         			<h1>Update Invoice</h1>
+         			<h1> Payments</h1>
+					 <br>
 					<div class="panel-body ">
 						<?php 
 						$attributes = array('class' => 'repeater');
-						echo form_open_multipart('index.php/main_controller/update_invoice_process/'.$id, $attributes);?>
+						echo form_open_multipart('index.php/main_controller/payment_process/'.$id, $attributes);?>
 						
 						
 						<?php $invoice_data = $this->db->get_where('invoices', array('id' => $id));
@@ -42,15 +43,15 @@ $count = 0;
 						{ ?>
 
 						<div class="form-group">
-							<label class="col-sm-2 control-label"><strong>Invoice Number</strong></label>
+							<label class="col-sm-2 control-label"><strong>Invoice Number</strong> <?php echo $invoice->invoice_number ?></label>
 							<div class="col-sm-2">
-								<input type="text" name="invoice_number" class="form-control input-sm" value="<?php echo $invoice->invoice_number ?>">
+								<!-- <input type="text" name="invoice_number" class="form-control input-sm" value="<?php echo $invoice->invoice_number ?>"> -->
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label"><strong>Invoice Prefix</strong></label>
+							<label class="col-sm-2 control-label"><strong>Invoice Prefix</strong> <?php echo $invoice->invoice_prefix ?></label>
 							<div class="col-sm-2">
-								<input type="text" name="invoice_prefix" class="form-control input-sm" value="<?php echo $invoice->invoice_prefix ?>">
+								<!-- <input type="text" name="invoice_prefix" class="form-control input-sm" value="<?php echo $invoice->invoice_prefix ?>"> -->
 							</div>
 						</div>
 
@@ -61,8 +62,12 @@ $count = 0;
 							
 						<?php
 						
+						// $data['linedata'] = $this->db->where('invoices_lines', array('invoice_id' => $id),
+						// 								join('payments', 'payment_id = invoices_lines.id'))->result_array();
 						$data['linedata'] = $this->db->get_where('invoices_lines', array('invoice_id' => $id))->result_array();
- 
+						$data['paydata'] = $this->db->get_where('payments', array('payment_id' => $id))->result_array();
+						// $data['linedata'] = $this->db->get_where('payments', array('payment_id' => $id))->result_array();
+//  
 						// echo "<br>";
 						// exit();
 					 
@@ -72,7 +77,7 @@ $count = 0;
 							//  echo "<pre>";
 						    //  print_r($data['linedata'] );
 							?>
-								<div data-repeater-item>	
+								 
 								
 
 								<div>
@@ -83,28 +88,28 @@ $count = 0;
 							
 							 
 							 	<div>
-								<label class="col-sm-2 control-label"><strong>Description</strong></label>
+								<label class="col-sm-2 control-label"><strong>Description</strong> <?= $l['description']; ?></label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[<?= $count; ?>][description]" class="form-control input-sm" value="<?= $l['description']; ?>">
+										<!-- <input type="text" name="linedata[<?= $count; ?>][description]" class="form-control input-sm" value="<?= $l['description']; ?>"> -->
 									</div>
 								</div>
 								
 								<div>
-								<label class="col-sm-2 control-label"><strong>Price</strong></label>
+								<label class="col-sm-2 control-label"><strong>Price</strong><?= $l['price']; ?> lei</label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[<?= $count; ?>][price]" class="form-control input-sm" value="<?= $l['price']; ?>">
+										<!-- <input type="text" name="linedata[<?= $count; ?>][price]" class="form-control input-sm" id="total_price" value="<?= $l['price']; ?> lei"> -->
 									</div>
 								</div>
 								<div>
-									<label class="col-sm-2 control-label"><strong>Qty</strong></label>
+									<label class="col-sm-2 control-label"><strong>Qty</strong> <?= $l['qty']; ?></label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[<?= $count; ?>][qty]" class="form-control input-sm" value="<?= $l['qty']; ?>">
+										<!-- <input type="text" name="linedata[<?= $count; ?>][qty]" class="form-control input-sm" value="<?= $l['qty']; ?>"> -->
 									</div>
 								</div>
 								<div>
-									<label class="col-sm-2 control-label"><strong>Procent tva</strong></label>
+									<label class="col-sm-2 control-label"><strong>Procent tva</strong> <?= $l['vat_percentage']; ?>%</label>
 									<div class="col-sm-10">
-										<input type="text" name="linedata[<?= $count; ?>][vat_percentage]" class="form-control input-sm" value="<?= $l['vat_percentage']; ?>">
+										<!-- <input type="text" name="linedata[<?= $count; ?>][vat_percentage]" class="form-control input-sm" value="<?= $l['vat_percentage']; ?>%"> -->
 									</div>
 								</div>	
 
@@ -115,8 +120,16 @@ $count = 0;
 								</div> 
 								<br>
 								
-								<input data-repeater-delete type="button" class="form-control input-sm btn btn-danger" value="Delete"/>
-							</div>
+							
+								<div>
+									<label class="col-sm-4 control-label"><strong>Pay now</strong> <span style="color: #ffc107;">(out of total <?= $l['price']; ?> lei)</span> </label>
+									<div class="col-sm-10">
+										<input type="text" name="paydata[<?= $count; ?>][paid]" class="form-control input-sm" >
+									</div>
+								</div>	
+								<br>
+								<input type="submit" name="pay_now" value="complete payment" class="btn btn-sm btn-warning">
+							 
 	
 								<br>
 								<br>
@@ -124,27 +137,14 @@ $count = 0;
 								
 						<?php
 						$count++;
-					// print_r($data['linedata']); exit();	
+					// print_r($data['paydata']); exit();	
 					}
 						
 						?> 
-								<br>
-								</div>
- 
-								<input data-repeater-create type="button" class="form-control input-sm btn btn-info"  value="Add new line"/>
-								<br>
-								<br>
-								<div>
-									<div class="col-sm-offset-2 col-sm-10">
-										<input type="submit" name="update_invoice" value="Update invoice" class="btn btn-sm btn-warning">
-									</div>
-								</div>
-
-						<br><br>
-
+								 
 						
 					<?php
-					//	unset($l);
+					//  print_r($data['paydata']); exit();	
 						// print_r($data['linedata']); exit();	
 						form_close();
 					}

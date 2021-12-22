@@ -41,10 +41,13 @@ $id=$this->uri->segment(3);
   <thead>
     <tr>
        
+      <th scope="col">Invoice ID</th>
       <th scope="col">Invoice number</th>
       <th scope="col">Invoice prefix</th>
-      <th scope="col">Total plata</th>
-      <th scope="col">Pay</th>
+      <th scope="col">Total factura</th>
+      <th scope="col">Platit</th>
+      <th scope="col">Rest de plata</th>
+      <th scope="col">Plateste</th>
       <!-- <th scope="col">Delete</th> -->
  
     </tr>
@@ -56,20 +59,45 @@ $id=$this->uri->segment(3);
     
       
     $results = $this->db->get('invoices');
+ 
 
+    // $paid = $this->db->group_by("invoice_id");
+
+
+    //  $paid= $this->db->get('invoice_id, sum(paid) as paid from payments group by invoice_id');
+
+    //     foreach ($query->result() as $row)
+    //     {
+    //         echo $row->invoice_id;
+    //         echo $row->paid;
+    //     }
      
-      
-      foreach($results->result() as $invoice)
-      { 
+    foreach($results->result() as $invoice)
+    { 
+        $data['sum'] = $this->Pay_model->sum_paid();  
         
+
+        echo '<pre>';
+        print_r($data['sum']);
+        exit();
+
+        $total = $invoice->total;
+        $paid = $data['sum'][0]['total_paid']; 
+
+
+
+        $rest = $total - $paid;
     ?>
     <tr>
      
+      <td > <?= $invoice->id; ?> </td>
       <td > <?= $invoice->invoice_number; ?> </td>
       <td ><?= $invoice->invoice_prefix; ?> </td>
-      <td ><?= $invoice->total; ?> </td>
+      <td ><?= $total ?> </td>
+      <td ><?= $paid; ?></td>
+      <td ><?= $total - $paid; ?> </td>
       <!-- <td> <a href="<?= site_url() ?>index.php/main_controller/single_invoice/<?= $invoice->id; ?>" class="btn btn-success btn-xs btn-block">view details</a> </td> -->
-      <td> <a href="<?= site_url() ?>index.php/main_controller/payment_process/<?= $invoice->id; ?>" class="btn btn-info btn-xs btn-block">pay</a></td>
+      <td> <a href="<?= site_url() ?>index.php/main_controller/payment_invoice/<?= $invoice->id; ?>" class="btn btn-info btn-xs btn-block">pay</a></td>
       <!-- <td> <a href="<?= site_url() ?>index.php/main_controller/delete_invoice/<?= $invoice->id; ?>" class="btn btn-danger btn-xs btn-block">delete </td> -->
 
     </tr>

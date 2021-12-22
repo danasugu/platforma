@@ -7,6 +7,8 @@ class Main_controller extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Main_model');
+        $this->load->model('Invoice_model');
+        $this->load->model('Pay_model');
       }
 
 
@@ -31,21 +33,124 @@ class Main_controller extends CI_Controller {
 	
 	public function payments(){
 		// $this->load->view('header');
+
+		$data['sum'] = $this->Pay_model->sum_paid(); 
 		$this->load->view('payments');
 	}
-	
-	public function payment_process($id){
-		// $this->load->view('header');
+
+
+	public function payment_invoice($id)
+
+	{
+		$this->Invoice_model->getTotalInvoice($id);
+		
 		$this->load->view('update_payment', $id);
+		
+		// var_dump($myreturn->id); exit();
 	}
 
+	public function multiple_payments($id) 
+	{
+	   if( $this->input->post( 'pay' ))
+	   {
+		   
+
+			$data  = $this->input->post();
+
+			$this->db->insert('payments',[ 'invoice_id' => $data['invoice_id'], 'paid' => $data['pay_now'] ]);		// one to many insert one line (one invoice to many paymnets)
+
+			redirect(site_url('index.php/main_controller/payments'));
+
+	   }
+	}
+	
+	public function payment_process( $id){
+		// $this->load->view('header');
+		
+		if( $this->input->post( 'pay_now' ))
+		{
+
+			$data = $this->input->post();
+
+			// print_r($data); exit();
+		
+			
+		
+			//	$total = 0;
+			$payment_id = $this->db->insert_id();
+			
+			foreach( $data['paydata'] as $key => $p )
+			{
+				// print_r($l); exit();
+				
+				$l['invoice_id'] = $payment_id;
+				
+				
+				$this->db->insert( 'payments', $p );
+				
+				
+			//	$total += $l['qty'] * $l['price'];
+				
+			}
+
+			//$this->db->where('id', $invoice_id)->update('invoices', ['total'=> $total]);
+			 
+			redirect(site_url('index.php/main_controller/payments'));
+		}
+
+	
+		$this->load->view('update_payment', $id);
+
+	}
+
+
+
 	public function view_invoices() {
+
+		$data['invoices'] = $this->Invoice_model->get_invoices();
+
+		$data['payments'] = $this->Pay_model->sum_paid();
+
+		foreach( $data['invoices'] as $key => $invoice){
+
+			foreach($data['payments'] as $key2 => $payment ){
+
+					if( $invoice->id == $payment['invoice_id'] ){
+
+						$data['invoices'][$key]->total_paid = $payment['total_paid'];
+
+						$data['invoices'][$key]->remaining_payment = $invoice->total - $payment['total_paid'];
+
+					}
+
+			}
+
+		}
+
+
 		$this->load->view('header');
 		
-		$this->load->view('view_invoices');
-		$this->Main_model->view_invoices();
+		$this->load->view('view_invoices', $data);
+	}
 
+	public function view_invoices2() {
+
+		$data['invoices'] = $this->Invoice_model->get_invoices_with_payment();
+
+	
+		$this->load->view('header');
 		
+		$this->load->view('view_invoices', $data);
+	}
+
+
+	public function total_invoice($id) {
+		$this->load->view('header');
+		
+		
+		$this->load->model('Invoice_model', $id);
+		
+		$this->load->view('total_invoice');
 
     //   $results =  $query->result(); 
 		// echo 'succes';
@@ -296,6 +401,10 @@ public function update_invoice_process( $id )
 		$this->load->view('repeat');
 		
 	}
+
+
+ 
+
 
 }
 

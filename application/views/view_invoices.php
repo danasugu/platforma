@@ -43,7 +43,9 @@ $id=$this->uri->segment(3);
        
       <th scope="col">Invoice number</th>
       <th scope="col">Invoice prefix</th>
-      <th scope="col">Total plata</th>
+      <th scope="col">Total factura</th>
+      <th scope="col">Total platit</th>
+      <th scope="col">Rest de plata</th>
       <th scope="col">Edit / Update</th>
       <th scope="col">Delete</th>
  
@@ -55,11 +57,11 @@ $id=$this->uri->segment(3);
     <?php
     
       
-    $results = $this->db->get('invoices');
+    
 
      
       
-      foreach($results->result() as $invoice)
+      foreach($invoices as $invoice)
       { 
         
     ?>
@@ -68,6 +70,8 @@ $id=$this->uri->segment(3);
       <td > <?= $invoice->invoice_number; ?> </td>
       <td ><?= $invoice->invoice_prefix; ?> </td>
       <td ><?= $invoice->total; ?> </td>
+      <td ><?= $invoice->total_paid; ?> </td>
+      <td ><?= $invoice->remaining_payment; ?> </td>
       <!-- <td> <a href="<?= site_url() ?>index.php/main_controller/single_invoice/<?= $invoice->id; ?>" class="btn btn-success btn-xs btn-block">view details</a> </td> -->
       <td> <a href="<?= site_url() ?>index.php/main_controller/update_invoice/<?= $invoice->id; ?>" class="btn btn-info btn-xs btn-block">edit/update</a></td>
       <td> <a href="<?= site_url() ?>index.php/main_controller/delete_invoice/<?= $invoice->id; ?>" class="btn btn-danger btn-xs btn-block">delete </td>

@@ -80,14 +80,14 @@ class Main_model extends CI_Model {
     // }
   
 
-    public function update_invoice_process($id)
-    {
-       $this->db->get_where('invoices', array('id' => $id));
-       $this->db->where('id',$l['id'])->update( 'invoices_lines', $l );
+    // public function update_invoice_process($id)
+    // {
+    //    $this->db->get_where('invoices', array('id' => $id));
+    //    $this->db->where('id',$l['id'])->update( 'invoices_lines', $l );
 
-        // $this->db->update('invoices', $id);
-        // $this->db->update('invoices_lines', $id);
-    }
+    //     // $this->db->update('invoices', $id);
+    //     // $this->db->update('invoices_lines', $id);
+    // }
   
 }
 
