@@ -401,17 +401,12 @@ public function update_invoice_process( $id )
 		return $result->row()->paid;
 		
 		// $data['sum'] = $this->model->get_sum(); //in CI_C
-		// <?php echo $sum; ?>  //in view
+		// <?php echo $sum; //in view
 	}
 
 
 
-	public function repeat(){
-		
-		$this->load->view('repeat');
-		
-	}
-
+ 
 
  
 
